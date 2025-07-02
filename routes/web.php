@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +17,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/', 'update')->name('update');
         Route::delete('/', 'destroy')->name('destroy');
     });
+
+    Route::post('/import', [ExcelController::class, 'import'])->name('excel.import');
 
     Route::prefix('/companies')->controller(CompanyController::class)->name('companies.')->group(function () {
         Route::get('/', 'index')->name('index');

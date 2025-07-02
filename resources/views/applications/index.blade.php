@@ -20,12 +20,12 @@
         @forelse($applications as $application)
             <tr class="pointer" data-href="{{ route('applications.show', ['application' => $application]) }}">
                 <th scope="row">{{ $application->id }}</th>
-                <td>{{ $application->company->name }}</td>
+                <td>{{ $application->company?->name }}</td>
                 <td>{{ $application->position }}</td>
                 <td>
                     <span class="badge text-bg-warning">{{ $application->status }}</span>
                 </td>
-                <td>{{ $application->company->region }}</td>
+                <td>{{ $application->company?->region }}</td>
                 <td>{{ $application->applied_at }}</td>
             </tr>
         @empty
@@ -36,4 +36,6 @@
         @endforelse
         </tbody>
     </table>
+
+    {!! $applications->links() !!}
 @endsection

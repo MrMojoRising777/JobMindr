@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('position');
             $table->string('description');
             $table->string('found_on');
-            $table->string('link');
+            $table->text('link');
             $table->enum('status', ['applied', 'interview', 'offer', 'rejected', 'hired', 'canceled'])->default('applied');
             $table->date('applied_at')->nullable();
             $table->text('notes')->nullable();

@@ -36,24 +36,24 @@
                 <div class="col-3"></div>
 
                 <div class="col-3">
-                    <span class="fs-4">{{ $application->company->contact->full_name }}</span>
+                    <span class="fs-4">{{ $application->company->contact?->full_name }}</span>
                     <br />
-                    <span class="fs-6 text-secondary-emphasis">{{ $application->company->contact->position }}</span>
+                    <span class="fs-6 text-secondary-emphasis">{{ $application->company->contact?->position }}</span>
 
                     <table class="table">
                         <tr>
                             <td>
                                 <i class="bi bi-envelope"></i>
                             </td>
-                            <td>{{ $application->company->contact->email }}</td>
+                            <td>{{ $application->company->contact?->email }}</td>
                         </tr>
                         <tr>
                             <td>
                                 <i class="bi bi-telephone"></i>
                             </td>
-                            <td>{{ $application->company->contact->phone }}</td>
+                            <td>{{ $application->company->contact?->phone }}</td>
                         </tr>
-                        @if($application->company->contact->linkedin)
+                        @if($application->company->contact?->linkedin)
                             <tr>
                                 <td>
                                     <i class="bi bi-linkedin"></i>
