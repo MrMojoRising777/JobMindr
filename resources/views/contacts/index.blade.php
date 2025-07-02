@@ -17,7 +17,7 @@
         </thead>
         <tbody>
             @forelse($contacts as $contact)
-                <tr>
+                <tr class="pointer" data-href="{{ route('contacts.show', ['contact' => $contact]) }}">
                     <th scope="row">{{ $contact->id }}</th>
                     <td>{{ $contact->company->name }}</td>
                     <td>{{ $contact->full_name }}</td>

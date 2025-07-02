@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('position')->nullable();
+            $table->string('linkedin')->nullable();
             $table->timestamps();
         });
     }

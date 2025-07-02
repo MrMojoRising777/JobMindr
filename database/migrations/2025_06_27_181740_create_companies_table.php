@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('zipcode');
             $table->string('city');
             $table->string('region');
+            $table->string('country');
+            $table->string('sector');
             $table->string('website')->nullable();
             $table->timestamps();
         });

@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <img class="img-thumbnail rounded-circle" width="200 " src="https://haieng.com/wp-content/uploads/2017/10/test-image-500x500.jpg" alt="test img">
+            <img class="img-thumbnail rounded-circle" width="200" src="https://haieng.com/wp-content/uploads/2017/10/test-image-500x500.jpg" alt="test img">
             <h5 class="card-title">{{ $contact->full_name }}</h5>
 
 

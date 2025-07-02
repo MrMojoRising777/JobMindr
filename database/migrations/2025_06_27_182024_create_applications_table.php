@@ -16,7 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->string('position');
-            $table->enum('status', ['sent', 'interview', 'offer', 'rejected', 'hired', 'canceled'])->default('sent');
+            $table->string('description');
+            $table->string('found_on');
+            $table->string('link');
+            $table->enum('status', ['applied', 'interview', 'offer', 'rejected', 'hired', 'canceled'])->default('applied');
             $table->date('applied_at')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

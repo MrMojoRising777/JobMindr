@@ -10,7 +10,7 @@ class Application extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'company_id', 'position', 'status', 'applied_at', 'notes'];
+    protected $fillable = ['user_id', 'company_id', 'position', 'description', 'found_on', 'status', 'applied_at', 'notes'];
 
     public function company(): BelongsTo
     {

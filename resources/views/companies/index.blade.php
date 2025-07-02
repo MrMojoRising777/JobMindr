@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             @forelse($companies as $company)
-                <tr>
+                <tr class="pointer" data-href="{{ route('companies.show', ['company' => $company]) }}">
                     <th scope="row">{{ $company->id }}</th>
                     <td>{{ $company->name }}</td>
                     <td>{{ $company->region }}</td>

@@ -1,3 +1,8 @@
-/*@tailwind base;*/
-/*@tailwind components;*/
-/*@tailwind utilities;*/
+.pointer {
+    cursor: pointer !important;
+}
+
+/* Quill editor overwrite */
+#editor {
+    height: 200px !important;
+}
