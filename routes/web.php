@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/contacts')->controller(ContactController::class)->name('contacts.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
+        Route::post('/{contact?}', 'storeOrUpdate')->name('store');
         Route::get('/{contact}', 'show')->name('show');
     });
 
@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{application}', 'show')->name('show');
+
+        Route::post('/filter', 'filter')->name('filter');
     });
 });
 

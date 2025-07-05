@@ -1,41 +1,69 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ route('applications.create') }}" class="btn btn-info text-white">
-        Create
-    </a>
+    <div class="row">
+        <form id="filter-form">
+            @csrf
+            <div class="col-12">
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <select name="status" class="form-control" id="filter-status">
+                            <option value="">All Statuses</option>
+                            <option value="applied">Applied</option>
+                            <option value="interview">Interview</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="accepted">Accepted</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="region" class="form-control" id="filter-region" placeholder="Region">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Company</th>
-            <th scope="col">Job title</th>
-            <th scope="col">Status</th>
-            <th scope="col">Region</th>
-            <th scope="col">Applied on</th>
-        </tr>
-        </thead>
-        <tbody>
-        @forelse($applications as $application)
-            <tr class="pointer" data-href="{{ route('applications.show', ['application' => $application]) }}">
-                <th scope="row">{{ $application->id }}</th>
-                <td>{{ $application->company?->name }}</td>
-                <td>{{ $application->position }}</td>
-                <td>
-                    <span class="badge text-bg-warning">{{ $application->status }}</span>
-                </td>
-                <td>{{ $application->company?->region }}</td>
-                <td>{{ $application->applied_at }}</td>
-            </tr>
-        @empty
-            <tr>
-                <th scope="row">x</th>
-                <td colspan="5">No applications found</td>
-            </tr>
-        @endforelse
-        </tbody>
-    </table>
+    <div class="row mt-2">
+        <div class="col-12">
+            <a href="{{ route('applications.create') }}" class="btn btn-info text-white">
+                Create
+            </a>
+        </div>
+    </div>
 
-    {!! $applications->links() !!}
+    <div class="row">
+        <div class="col-12" id="table-container">
+            @include('applications.partials.table')
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {{ $applications->links() }}
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function fetchFilteredApplications() {
+            $.ajax({
+                url: "{{ route('applications.filter') }}",
+                method: 'POST',
+                data: $('#filter-form').serialize(),
+                success: function (data) {
+                    $('#table-container').html(data);
+                },
+                error: function () {
+                    alert('Something went wrong!');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#filter-form select, #filter-form input').on('change keyup', function () {
+                fetchFilteredApplications();
+            });
+        });
+    </script>
+@endpush

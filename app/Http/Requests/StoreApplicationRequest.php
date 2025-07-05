@@ -42,12 +42,12 @@ class StoreApplicationRequest extends FormRequest
             'company.country'   => 'required|string|max:255',
 
             // Contact rules
-            'contact.first_name'    => 'required|string|max:255',
-            'contact.last_name'     => 'required|string|max:255',
+            'contact.first_name'    => 'nullable|string|max:255',
+            'contact.last_name'     => 'nullable|string|max:255',
             'contact.email'         => 'nullable|email|max:255',
             'contact.phone'         => 'nullable|string|max:20',
             'contact.linkedin'      => 'nullable|url|max:255',
-            'contact.position'      => 'required|string|max:255',
+            'contact.position'      => 'nullable|string|max:255',
 
             // Application rules
             'application.position'  => 'required|string|max:255',
@@ -55,5 +55,4 @@ class StoreApplicationRequest extends FormRequest
             'application.notes'     => 'nullable|string|max:600',
         ];
     }
-
 }

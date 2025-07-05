@@ -13,6 +13,21 @@
                         <h5>Company</h5>
                     </div>
 
+{{--                    <div class="row">--}}
+{{--                        <div class="col-2">--}}
+{{--                            <select class="form-select" name="application[company_id]">--}}
+{{--                                <option value="" disabled {{ old('company_id') ? '' : 'selected' }}>Select a company</option>--}}
+{{--                                @forelse($companies as $company)--}}
+{{--                                    <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>--}}
+{{--                                        {{ $company->name }}--}}
+{{--                                    </option>--}}
+{{--                                @empty--}}
+{{--                                    <option value="" selected disabled>No companies found</option>--}}
+{{--                                @endforelse--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
                     <div class="col-3">
                         <input type="text" class="form-control" name="company[name]" placeholder="Name" required value="{{ old('company[name]') }}">
                     </div>
@@ -60,21 +75,21 @@
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="contact[first_name]" placeholder="First name" required value="{{ old('contact[first_name]') }}">
+                        <input type="text" class="form-control" name="contact[first_name]" placeholder="First name" value="{{ old('contact[first_name]') }}">
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="contact[last_name]" placeholder="Last name" required value="{{ old('contact[last_name]') }}">
+                        <input type="text" class="form-control" name="contact[last_name]" placeholder="Last name" value="{{ old('contact[last_name]') }}">
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-2">
-                        <input type="email" class="form-control" name="contact[email]" placeholder="Email" required value="{{ old('contact[email]') }}">
+                        <input type="email" class="form-control" name="contact[email]" placeholder="Email" value="{{ old('contact[email]') }}">
                     </div>
 
                     <div class="col-2">
-                        <input type="tel" class="form-control" name="contact[phone]" placeholder="Phone" required value="{{ old('contact[phone]') }}">
+                        <input type="tel" class="form-control" name="contact[phone]" placeholder="Phone" value="{{ old('contact[phone]') }}">
                     </div>
 
                     <div class="col-2">
@@ -84,7 +99,7 @@
 
                 <div class="row mt-3">
                     <div class="col-2">
-                        <input type="text" class="form-control" name="contact[position]" placeholder="Position" required value="{{ old('contact[position]') }}">
+                        <input type="text" class="form-control" name="contact[position]" placeholder="Position" value="{{ old('contact[position]') }}">
                     </div>
                 </div>
 
@@ -96,11 +111,11 @@
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="application[position]" placeholder="Title" value="{{ old('position') }}">
+                        <input type="text" class="form-control" name="application[position]" placeholder="Title" required value="{{ old("application['position']") }}">
                     </div>
 
                     <div class="col-3">
-                        <input type="url" class="form-control" name="application[website]" placeholder="Website">
+                        <input type="url" class="form-control" name="application[website]" placeholder="Website" required value="{{ old("application['website']") }}">
                     </div>
 
                     <div class="col-1"></div>
@@ -111,21 +126,6 @@
                         <div id="editor" >
                             {!! old('application.notes') !!}
                         </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <select class="form-select" name="application[company_id]">
-                            <option value="" disabled {{ old('company_id') ? '' : 'selected' }}>Select a company</option>
-                            @forelse($companies as $company)
-                                <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
-                                    {{ $company->name }}
-                                </option>
-                            @empty
-                                <option value="" selected disabled>No companies found</option>
-                            @endforelse
-                        </select>
                     </div>
                 </div>
 

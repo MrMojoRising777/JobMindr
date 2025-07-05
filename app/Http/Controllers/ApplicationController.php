@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -33,17 +34,30 @@ class ApplicationController extends Controller
         $data = $request->validated();
 
         $company = Company::create($data['company']);
+        $contact = null;
 
         $data['contact']['company_id'] = $company->id;
-        $contact = Contact::create($data['contact']);
+
+        if (!empty($data['contact']['first_name']) && !empty($data['contact']['last_name'])) {
+            $contact = Contact::create([
+                'first_name' => $data['contact']['first_name'],
+                'last_name'  => $data['contact']['last_name'],
+                'email'      => $data['contact']['email'],
+                'phone'      => $data['contact']['phone'],
+                'linkedin'   => $data['contact']['linkedin'],
+                'position'   => $data['contact']['position'],
+                'company_id' => $data['contact']['company_id'],
+            ]);
+        }
 
         $data['application']['company_id'] = $company->id;
-        $data['application']['contact_id'] = $contact->id;
+        $data['application']['contact_id'] = $contact?->id ?? null;
         $data['application']['description'] = ''; // TODO not hardcode
         $data['application']['found_on'] = 'Linkedin'; // TODO not hardcode
         $data['application']['user_id'] = Auth::id();
         $data['application']['status'] = 'applied';
         $data['application']['applied_at'] = Carbon::now()->toDateString();
+        $data['application']['link'] = $data['application']['website'];
 
         $application = Application::create($data['application']);
 
@@ -56,4 +70,24 @@ class ApplicationController extends Controller
 
         return view('applications.show', compact('application'));
     }
+
+    public function filter(Request $request): string
+    {
+        $query = Application::query()->with('company');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('region')) {
+            $query->whereHas('company', function ($q) use ($request) {
+                $q->where('region', 'like', '%' . $request->region . '%');
+            });
+        }
+
+        $applications = $query->latest()->paginate(10);
+
+        return view('applications.partials.table', compact('applications'))->render();
+    }
+
 }

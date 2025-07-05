@@ -14,6 +14,11 @@ class StoreContactRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+//        dd($this->all());
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,8 +30,9 @@ class StoreContactRequest extends FormRequest
             'company_id'    => 'required|exists:companies,id',
             'first_name'    => 'required|string|max:255',
             'last_name'     => 'required|string|max:255',
-            'email'         => 'required|email|max:255',
-            'phone'         => 'required|string|max:255',
+            'email'         => 'nullable|email|max:255',
+            'phone'         => 'nullable|string|max:255',
+            'linkedin'      => 'nullable|string|max:255',
             'position'      => 'required|string|max:2000',
         ];
     }

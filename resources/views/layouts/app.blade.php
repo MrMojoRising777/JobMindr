@@ -15,25 +15,42 @@
     @include('layouts.navigation')
 
     <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                @foreach (['success', 'error', 'warning', 'info'] as $msg)
+                    @if(session()->has($msg))
+                        <div class="alert alert-{{ $msg }} alert-dismissible fade show" role="alert">
+                            {{ session($msg) }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
         @yield('content')
     </div>
 
     @include('modals.excelImport')
 
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $('#table-container').on('click', '.pointer', function () {
+                window.location = $(this).data('href');
+            });
+        });
+
         const quill = new Quill('#editor', {
             theme: 'snow',
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".pointer").forEach(function (row) {
-                row.addEventListener("click", function () {
-                    window.location = this.dataset.href;
-                });
-            });
-        });
-    </script>
+    @stack('scripts')
 </body>
 </html>

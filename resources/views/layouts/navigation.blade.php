@@ -39,7 +39,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
-                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Import</a>
+                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#importModal">Import</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="dropdown-item">Logout</button>
