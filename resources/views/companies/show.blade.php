@@ -28,29 +28,29 @@
 
                 <div class="row mt-3">
                     <div class="col-3">
-                        <input type="text" class="form-control" name="street" value="{{ $company->street ?? old('street') }}" placeholder="Street">
+                        <input type="text" class="form-control" name="street" id="street" value="{{ $company->street ?? old('street') }}" placeholder="Street">
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="housenr" value="{{ $company->housenr ?? old('housenr') }}" placeholder="Housenr">
+                        <input type="text" class="form-control" name="housenr" id="housenr" value="{{ $company->housenr ?? old('housenr') }}" placeholder="Housenr">
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-3">
-                        <input type="text" class="form-control" name="zipcode" value="{{ $company->zipcode ?? old('zipcode') }}" placeholder="Zipcode">
+                        <input type="text" class="form-control" name="zipcode" id="zipcode" value="{{ $company->zipcode ?? old('zipcode') }}" placeholder="Zipcode">
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="city" value="{{ $company->city ?? old('city') }}" placeholder="City">
+                        <input type="text" class="form-control" name="city" id="city" value="{{ $company->city ?? old('city') }}" placeholder="City">
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="region" value="{{ $company->region ?? old('region') }}" placeholder="Region">
+                        <input type="text" class="form-control" name="region" id="region" value="{{ $company->region ?? old('region') }}" placeholder="Region">
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="country" value="{{ $company->country ?? old('country') }}" placeholder="country">
+                        <input type="text" class="form-control" name="country" id="country" value="{{ $company->country ?? old('country') }}" placeholder="country">
                     </div>
                 </div>
 
@@ -108,3 +108,38 @@
         </div>
     </div>
 @endsection
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            function fetchAddress() {
+                let zipcode = $('#zipcode').val().replace(/\s+/g, '').toUpperCase();
+                let housenr = $('#housenr').val().trim();
+
+                if (zipcode.length === 6 && housenr !== '') {
+                    let query = zipcode + '+' + housenr;
+
+                    $.get('/api/address-lookup', { q: query })
+                        .done(function (data) {
+                            if (data.response.docs.length > 0) {
+                                var result = data.response.docs[0];
+
+                                $('#street').val(result.straatnaam || '');
+                                $('#city').val(result.woonplaatsnaam || '');
+                                $('#region').val(result.provincienaam || '');
+                                $('#country').val('Nederland');
+                            } else {
+                                console.warn('Geen resultaat gevonden.');
+                            }
+                        })
+                        .fail(function () {
+                            console.error('Fout bij ophalen van adresgegevens.');
+                        });
+                }
+            }
+
+            $('#zipcode, #housenr').on('blur', fetchAddress);
+        });
+    </script>
+@endpush

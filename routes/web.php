@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\CompanyController;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/filter', 'filter')->name('filter');
     });
+
+    Route::get('/api/address-lookup', [AddressController::class, 'lookup']);
 });
 
 require __DIR__.'/auth.php';
