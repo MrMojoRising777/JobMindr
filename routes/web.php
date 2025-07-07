@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/', 'store')->name('store');
         Route::get('/{application}', 'show')->name('show');
 
+        Route::put('/{application}', 'update')->name('update');
+
         Route::post('/filter', 'filter')->name('filter');
     });
 });

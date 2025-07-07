@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApplicationStatus;
 use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Application;
 use App\Models\Company;
 use App\Models\Contact;
@@ -74,8 +76,28 @@ class ApplicationController extends Controller
     public function show(Application $application): View
     {
         $application->load(['company.contact']);
+        $statuses = ApplicationStatus::cases();
 
-        return view('applications.show', compact('application'));
+        return view('applications.show', compact('application', 'statuses'));
+    }
+
+    public function update(UpdateApplicationRequest $request, Application $application): RedirectResponse
+    {
+        $data = $request->validated();
+
+        $updateData = $data;
+
+        unset($updateData['application_id']);
+
+        if (isset($updateData['notes']) && $updateData['notes'] !== null) {
+            $updateData['notes'] = $application->notes . '<br><br>' . $updateData['notes'];
+        } else {
+            $updateData['notes'] = $application->notes;
+        }
+
+        $application->update($updateData);
+
+        return redirect()->route('applications.show', $application)->with('success', 'Application updated!');
     }
 
     public function filter(Request $request): string

@@ -12,7 +12,7 @@
     <tbody>
     @forelse($applications as $application)
         @php
-            $status = strtolower($application->status);
+            $status = strtolower($application->status->value);
             $badgeClass = match ($status) {
                 'applied'   => 'text-bg-warning',
                 'interview' => 'text-bg-info',
@@ -27,7 +27,7 @@
             <td>{{ $application->company?->name }}</td>
             <td>{{ $application->position }}</td>
             <td>
-                <span class="badge {{ $badgeClass }}">{{ ucfirst($application->status) }}</span>
+                <span class="badge {{ $badgeClass }}">{{ ucfirst($application->status->value) }}</span>
             </td>
             <td>{{ $application->company?->region }}</td>
             <td>{{ $application->applied_at }}</td>

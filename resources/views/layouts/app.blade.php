@@ -47,8 +47,21 @@
             });
         });
 
-        const quill = new Quill('#editor', {
-            theme: 'snow',
+        let quill;
+
+        $('#applicationModal').on('shown.bs.modal', function () {
+            if (!quill) {
+                quill = new Quill('#quillContent', {
+                    theme: 'snow',
+                });
+            }
+        });
+
+        $(document).on('submit', 'form', function () {
+            if (quill) {
+                const content = quill.root.innerHTML;
+                $('#quillInput').val(content);
+            }
         });
     </script>
     @stack('scripts')

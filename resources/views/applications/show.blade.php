@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-        $status = strtolower($application->status);
+        $status = strtolower($application->status->value);
         $badgeClass = match ($status) {
             'applied'   => 'text-bg-warning',
             'interview' => 'text-bg-info',
@@ -13,6 +13,13 @@
     @endphp
 
     <div class="row">
+        <div class="col-2">
+            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#applicationModal">
+                <i class="bi bi-pen"></i>
+                Edit Application
+            </a>
+        </div>
+
         <div class="col-2">
             <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#contactModal">
                 <i class="bi bi-pen"></i>
@@ -37,7 +44,7 @@
                             <h2 class="card-title">
                                 {{ $application->position }} @ {{ $application->company->name }}
                                 <span class="text-end">
-                            <span class="badge {{ $badgeClass }} fs-6">{{ ucfirst($application->status) }}</span>
+                            <span class="badge {{ $badgeClass }} fs-6">{{ ucfirst($application->status->value) }}</span>
                         </span>
                             </h2>
 
@@ -123,6 +130,7 @@
         </div>
     </div>
 
+    @include('modals.editApplication', ['application' => $application])
     @include('modals.editContact', ['contact' => $application->company->contact, 'company' => $application->company])
     @include('modals.editCompany', ['company' => $application->company])
 @endsection

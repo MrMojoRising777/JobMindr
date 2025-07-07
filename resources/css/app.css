@@ -3,6 +3,6 @@
 }
 
 /* Quill editor overwrite */
-#editor {
+#quillContent {
     height: 200px !important;
 }
