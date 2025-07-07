@@ -5,13 +5,12 @@ use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::prefix('/profile')->controller(ProfileController::class)->name('profile.')->group(function () {
         Route::get('/', 'edit')->name('edit');
         Route::patch('/', 'update')->name('update');
@@ -35,11 +34,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/applications')->controller(ApplicationController::class)->name('applications.')->group(function () {
+        Route::get('/stats', 'stats')->name('stats');
+
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{application}', 'show')->name('show');
-
         Route::put('/{application}', 'update')->name('update');
 
         Route::post('/filter', 'filter')->name('filter');

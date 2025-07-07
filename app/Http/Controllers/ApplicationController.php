@@ -9,9 +9,11 @@ use App\Models\Application;
 use App\Models\Company;
 use App\Models\Contact;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ApplicationController extends Controller
@@ -89,7 +91,7 @@ class ApplicationController extends Controller
 
         unset($updateData['application_id']);
 
-        if (isset($updateData['notes']) && $updateData['notes'] !== null) {
+        if (isset($updateData['notes'])) {
             $updateData['notes'] = $application->notes . '<br><br>' . $updateData['notes'];
         } else {
             $updateData['notes'] = $application->notes;
@@ -119,4 +121,45 @@ class ApplicationController extends Controller
         return view('applications.partials.table', compact('applications'))->render();
     }
 
+    public function stats(): JsonResponse
+    {
+        $userId = auth()->id();
+
+        $weekly = DB::table('applications')
+            ->selectRaw('DATE(applied_at) as date, COUNT(*) as count')
+            ->where('user_id', $userId)
+            ->where('applied_at', '>=', Carbon::now()->subDays(6)->startOfDay())
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date');
+
+        $monthly = DB::table('applications')
+            ->selectRaw('DATE(applied_at) as date, COUNT(*) as count')
+            ->where('user_id', $userId)
+            ->where('applied_at', '>=', Carbon::now()->subDays(29)->startOfDay())
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date');
+
+        return response()->json([
+            'weekly' => $this->formatChartData($weekly, 7),
+            'monthly' => $this->formatChartData($monthly, 30),
+        ]);
+    }
+
+    protected function formatChartData($data, $days): array
+    {
+        $result = [];
+        $now = Carbon::now();
+
+        for ($i = $days - 1; $i >= 0; $i--) {
+            $date = $now->copy()->subDays($i)->toDateString();
+            $result[] = [
+                'date' => $date,
+                'count' => $data[$date] ?? 0,
+            ];
+        }
+
+        return $result;
+    }
 }
