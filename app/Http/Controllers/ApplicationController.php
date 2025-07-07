@@ -106,6 +106,12 @@ class ApplicationController extends Controller
     {
         $query = Application::query()->with('company');
 
+        if ($request->filled('company_name')) {
+            $query->whereHas('company', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->company_name . '%');
+            });
+        }
+
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }

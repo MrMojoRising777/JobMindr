@@ -7,6 +7,9 @@
             <div class="col-12">
                 <div class="row mb-2">
                     <div class="col-md-4">
+                        <input type="text" class="form-control" name="company_name" id="filter-company_name">
+                    </div>
+                    <div class="col-md-4">
                         <select name="status" class="form-control" id="filter-status">
                             <option value="">All Statuses</option>
                             <option value="applied" selected>Applied</option>

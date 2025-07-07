@@ -11,7 +11,7 @@
         <div class="card-body text-dark">
             <div class="row">
                 <div class="col-4">
-                    <h3 class="card-title">Weekly Report</span>
+                    <h3 class="card-title">Weekly Report</h3>
 
                     <div class="row mt-3">
                         <div class="col-6">
