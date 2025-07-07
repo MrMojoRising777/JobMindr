@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/companies')->controller(CompanyController::class)->name('companies.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
+        Route::post('/{company?}', 'storeOrUpdate')->name('store');
         Route::get('/{company}', 'show')->name('show');
     });
 

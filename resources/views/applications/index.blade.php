@@ -9,14 +9,19 @@
                     <div class="col-md-4">
                         <select name="status" class="form-control" id="filter-status">
                             <option value="">All Statuses</option>
-                            <option value="applied">Applied</option>
+                            <option value="applied" selected>Applied</option>
                             <option value="interview">Interview</option>
                             <option value="rejected">Rejected</option>
                             <option value="accepted">Accepted</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="region" class="form-control" id="filter-region" placeholder="Region">
+                        <select name="region" class="form-control" id="filter-region">
+                            <option value="">All Regions</option>
+                            @foreach($regions as $region)
+                                <option value="{{ $region }}" {{ request('region') == $region ? 'selected' : '' }}>{{ $region }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>

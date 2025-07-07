@@ -14,6 +14,11 @@ class StoreCompanyRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+//        dd($this->all());
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,13 +27,16 @@ class StoreCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => 'required|string|max:255',
-            'street'    => 'required|string|max:255',
-            'housenr'   => 'required|string|max:10',
-            'zipcode'   => 'required|string|max:10',
-            'city'      => 'required|string|max:255',
-            'region'    => 'required|string|max:255',
-            'website'   => 'nullable|url|max:255',
+            'company_id'    => 'nullable|exists:companies,id',
+            'name'          => 'required|string|max:255',
+            'street'        => 'required|string|max:255',
+            'housenr'       => 'required|string|max:10',
+            'zipcode'       => 'required|string|max:10',
+            'city'          => 'required|string|max:255',
+            'region'        => 'required|string|max:255',
+            'country'       => 'required|string|max:255',
+            'sector'        => 'nullable|string|max:255',
+            'website'       => 'nullable|url|max:255',
         ];
     }
 }

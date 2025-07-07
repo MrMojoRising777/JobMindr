@@ -19,6 +19,13 @@
                 Edit Contact
             </a>
         </div>
+
+        <div class="col-2">
+            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#companyModal">
+                <i class="bi bi-pen"></i>
+                Edit Company
+            </a>
+        </div>
     </div>
 
     <div class="row mt-2">
@@ -36,7 +43,7 @@
 
                             <span>{{ $application->applied_at }}</span>
 
-                            <hr class="hr mb-0" />
+                            <hr class="hr mb-0"/>
 
                             <span class="text-danger">
                         <i class="bi bi-briefcase"></i> Remote - full-time - entry level |
@@ -46,7 +53,9 @@
                         </div>
 
                         <div class="col-3 text-end pe-5">
-                            <img class="img-thumbnail rounded-circle" width="100" src="https://haieng.com/wp-content/uploads/2017/10/test-image-500x500.jpg" alt="test img">
+                            <img class="img-thumbnail rounded-circle" width="100"
+                                 src="https://haieng.com/wp-content/uploads/2017/10/test-image-500x500.jpg"
+                                 alt="test img">
                         </div>
                     </div>
 
@@ -59,8 +68,9 @@
 
                         <div class="col-3">
                             <span class="fs-4">{{ $application->company->contact?->full_name }}</span>
-                            <br />
-                            <span class="fs-6 text-secondary-emphasis">{{ $application->company->contact?->position }}</span>
+                            <br/>
+                            <span
+                                class="fs-6 text-secondary-emphasis">{{ $application->company->contact?->position }}</span>
 
                             <table class="table">
                                 <tr>
@@ -103,7 +113,7 @@
 
                             <input type="hidden" name="application[notes]" id="hidden-description">
 
-                            <div id="editor" >
+                            <div id="editor">
                                 {!! $application->notes !!}
                             </div>
                         </div>
@@ -113,5 +123,6 @@
         </div>
     </div>
 
-    @include('modals.contactModal', ['contact' => $application->company->contact, 'company' => $application->company])
+    @include('modals.editContact', ['contact' => $application->company->contact, 'company' => $application->company])
+    @include('modals.editCompany', ['company' => $application->company])
 @endsection

@@ -16,9 +16,16 @@ class ApplicationController extends Controller
 {
     public function index(): View
     {
-        $applications = Application::with('company')->paginate(10);
+        $applications = Application::with('company')->where('status', 'applied')->paginate(10);
 
-        return view('applications.index', compact('applications'));
+        $regions = Company::whereHas('applications')
+            ->whereNotNull('region')
+            ->where('region', '!=', '')
+            ->distinct()
+            ->orderBy('region')
+            ->pluck('region');
+
+        return view('applications.index', compact('applications', 'regions'));
     }
 
     public function create(): View
