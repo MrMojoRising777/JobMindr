@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-        $status = strtolower($application->status->value);
-        $badgeClass = match ($status) {
-            'applied'   => 'text-bg-warning',
-            'interview' => 'text-bg-info',
-            'rejected'  => 'text-bg-danger',
-            'accepted'  => 'text-bg-success',
-            default     => 'text-bg-secondary',
-        };
-    @endphp
-
     <div class="row">
         <div class="col-2">
             <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#applicationModal">
@@ -44,8 +33,10 @@
                             <h2 class="card-title">
                                 {{ $application->position }} @ {{ $application->company->name }}
                                 <span class="text-end">
-                            <span class="badge {{ $badgeClass }} fs-6">{{ ucfirst($application->status->value) }}</span>
-                        </span>
+                                    <span class="badge {{ $application->status->badgeClass() }} fs-6">
+                                        {{ $application->status->label() }}
+                                    </span>
+                                </span>
                             </h2>
 
                             <span>{{ $application->applied_at }}</span>
@@ -110,9 +101,36 @@
 
                     <div class="row">
                         <div class="col-5">
-                    <span class="fs-3">
-                        Activity history here
-                    </span>
+                            <ul>
+                                @foreach ($application->activities as $activity)
+                                    <li>
+                                        {{ $activity->created_at->format('Y-m-d') }} -
+
+                                        @if ($activity->description === 'Status updated' && isset($activity->properties['attributes']['status']))
+                                            @php
+                                                $statusValue = $activity->properties['attributes']['status'];
+                                                $statusEnum = \App\Enums\ApplicationStatus::tryFrom($statusValue);
+                                            @endphp
+
+                                            Status updated to
+                                            <span class="{{ $statusEnum->badgeClass() }}">
+                                                {{ $statusEnum->label() }}
+                                            </span>
+
+                                            @if ($statusValue === 'rejected' && isset($activity->properties['attributes']['reason']))
+                                                - <span class="fw-semibold text-danger text-decoration-underline">
+                                                    {{
+                                                        \App\Enums\ApplicationRejectionReason::tryFrom($activity->properties['attributes']['reason'])?->label()
+                                                        ?? ucfirst($activity->properties['attributes']['reason'])
+                                                    }}
+                                                </span>
+                                            @endif
+                                        @else
+                                            {{ $activity->description }}
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
 
                         <div class="col-4">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApplicationRejectionReason;
 use App\Enums\ApplicationStatus;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
@@ -63,8 +64,6 @@ class ApplicationController extends Controller
 
         $data['application']['company_id'] = $company->id;
         $data['application']['contact_id'] = $contact?->id ?? null;
-        $data['application']['description'] = ''; // TODO not hardcode
-        $data['application']['found_on'] = 'Linkedin'; // TODO not hardcode
         $data['application']['user_id'] = Auth::id();
         $data['application']['status'] = 'applied';
         $data['application']['applied_at'] = Carbon::now()->toDateString();
@@ -77,10 +76,11 @@ class ApplicationController extends Controller
 
     public function show(Application $application): View
     {
-        $application->load(['company.contact']);
+        $application->load(['company.contact', 'activities']);
         $statuses = ApplicationStatus::cases();
+        $reasons = ApplicationRejectionReason::cases();
 
-        return view('applications.show', compact('application', 'statuses'));
+        return view('applications.show', compact('application', 'statuses', 'reasons'));
     }
 
     public function update(UpdateApplicationRequest $request, Application $application): RedirectResponse

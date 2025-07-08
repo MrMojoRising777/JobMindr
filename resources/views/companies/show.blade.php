@@ -109,7 +109,6 @@
     </div>
 @endsection
 
-
 @push('scripts')
     <script>
         $(document).ready(function () {
@@ -123,7 +122,7 @@
                     $.get('/api/address-lookup', { q: query })
                         .done(function (data) {
                             if (data.response.docs.length > 0) {
-                                var result = data.response.docs[0];
+                                let result = data.response.docs[0];
 
                                 $('#street').val(result.straatnaam || '');
                                 $('#city').val(result.woonplaatsnaam || '');

@@ -20,6 +20,18 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="row mt-3 @if($status != 'rejected') d-none @endif" id="reason-container">
+                        <div class="col-12">
+                            <select name="reason" class="form-control">
+                                <option value="" selected disabled>What was the reason?</option>
+                                @foreach($reasons as $reason)
+                                    <option value="{{ $reason }}" @if (old('reason', $application->reason?->value) === $reason->value) selected @endif>{{ $reason->label() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="row mt-3">
                        <div class="col-12">
                            <label>Note</label>
@@ -41,3 +53,24 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            function toggleReasonSelect() {
+                const status = $('select[name="status"]').val();
+
+                if (status === 'rejected') {
+                    $('#reason-container').removeClass('d-none');
+                } else {
+                    $('#reason-container').addClass('d-none');
+                    $('#reason-container select').val('');
+                }
+            }
+
+            toggleReasonSelect();
+
+            $('select[name="status"]').on('change', toggleReasonSelect);
+        });
+    </script>
+@endpush

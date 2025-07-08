@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ApplicationRejectionReason;
 use App\Enums\ApplicationStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
@@ -31,6 +32,7 @@ class UpdateApplicationRequest extends FormRequest
         return [
             'application_id'    => 'required|exists:applications,id',
             'status'            => ['required', new Enum(ApplicationStatus::class)],
+            'reason'            => ['nullable', new Enum(ApplicationRejectionReason::class)],
             'notes'             => ['nullable', 'string'],
         ];
     }

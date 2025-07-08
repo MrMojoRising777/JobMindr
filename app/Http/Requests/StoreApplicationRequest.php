@@ -51,6 +51,7 @@ class StoreApplicationRequest extends FormRequest
 
             // Application rules
             'application.position'  => 'required|string|max:255',
+            'application.found_on'  => 'required|string|max:255',
             'application.website'   => 'nullable|url|max:255',
             'application.notes'     => 'nullable|string|max:600',
         ];

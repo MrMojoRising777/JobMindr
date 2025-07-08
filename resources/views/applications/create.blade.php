@@ -29,41 +29,41 @@
 {{--                    </div>--}}
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="company[name]" placeholder="Name" required value="{{ old('company[name]') }}">
+                        <input type="text" class="form-control" name="company[name]" placeholder="Name" required value="{{ old('company.name') }}">
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="company[sector]" placeholder="Sector" required value="{{ old('company[sector]') }}">
+                        <input type="text" class="form-control" name="company[sector]" placeholder="Sector" required value="{{ old('company.sector') }}">
                     </div>
 
                     <div class="col-3">
-                        <input type="url" class="form-control" name="company[website]" placeholder="Website" value="{{ old('company[website]') }}">
+                        <input type="url" class="form-control" name="company[website]" placeholder="Website" value="{{ old('company.website') }}">
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-3">
-                        <input type="text" class="form-control" name="company[street]" placeholder="Street" required value="{{ old('company[street]') }}">
+                        <input type="text" class="form-control" name="company[street]" id="street" placeholder="Street" required value="{{ old('company.street') }}">
                     </div>
 
                     <div class="col-1">
-                        <input type="text" class="form-control" name="company[housenr]" placeholder="Housnr" required value="{{ old('company[housenr]') }}">
+                        <input type="text" class="form-control" name="company[housenr]" id="housenr" placeholder="Housnr" required value="{{ old('company.housenr') }}">
                     </div>
 
                     <div class="col-1">
-                        <input type="text" class="form-control" name="company[zipcode]" placeholder="Zipcode" required value="{{ old('company[zipcode]') }}">
+                        <input type="text" class="form-control" name="company[zipcode]" id="zipcode" placeholder="Zipcode" required value="{{ old('company.zipcode') }}">
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="company[city]" placeholder="City" required value="{{ old('company[city]') }}">
+                        <input type="text" class="form-control" name="company[city]" id="city" placeholder="City" required value="{{ old('company.city') }}">
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="company[region]" placeholder="Region" required value="{{ old('company[region]') }}">
+                        <input type="text" class="form-control" name="company[region]" id="region" placeholder="Region" required value="{{ old('company.region') }}">
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="company[country]" placeholder="Country" required value="{{ old('company[country]') }}">
+                        <input type="text" class="form-control" name="company[country]" id="country" placeholder="Country" required value="{{ old('company.country') }}">
                     </div>
                 </div>
 
@@ -75,31 +75,31 @@
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="contact[first_name]" placeholder="First name" value="{{ old('contact[first_name]') }}">
+                        <input type="text" class="form-control" name="contact[first_name]" placeholder="First name" value="{{ old('contact.first_name') }}">
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="contact[last_name]" placeholder="Last name" value="{{ old('contact[last_name]') }}">
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-2">
-                        <input type="email" class="form-control" name="contact[email]" placeholder="Email" value="{{ old('contact[email]') }}">
-                    </div>
-
-                    <div class="col-2">
-                        <input type="tel" class="form-control" name="contact[phone]" placeholder="Phone" value="{{ old('contact[phone]') }}">
-                    </div>
-
-                    <div class="col-2">
-                        <input type="url" class="form-control" name="contact[linkedin]" placeholder="Linkedin" value="{{ old('contact[linkedin]') }}">
+                        <input type="text" class="form-control" name="contact[last_name]" placeholder="Last name" value="{{ old('contact.last_name') }}">
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-2">
-                        <input type="text" class="form-control" name="contact[position]" placeholder="Position" value="{{ old('contact[position]') }}">
+                        <input type="email" class="form-control" name="contact[email]" placeholder="Email" value="{{ old('contact.email') }}">
+                    </div>
+
+                    <div class="col-2">
+                        <input type="tel" class="form-control" name="contact[phone]" placeholder="Phone" value="{{ old('contact.phone') }}">
+                    </div>
+
+                    <div class="col-2">
+                        <input type="url" class="form-control" name="contact[linkedin]" placeholder="Linkedin" value="{{ old('contact.linkedin') }}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-2">
+                        <input type="text" class="form-control" name="contact[position]" placeholder="Position" value="{{ old('contact.position') }}">
                     </div>
                 </div>
 
@@ -111,19 +111,21 @@
                     </div>
 
                     <div class="col-3">
-                        <input type="text" class="form-control" name="application[position]" placeholder="Title" required value="{{ old("application['position']") }}">
+                        <input type="text" class="form-control" name="application[position]" placeholder="Title" required value="{{ old("application.position") }}">
                     </div>
 
                     <div class="col-3">
-                        <input type="url" class="form-control" name="application[website]" placeholder="Website" required value="{{ old("application['website']") }}">
+                        <input type="url" class="form-control" name="application[website]" placeholder="Website" required value="{{ old("application.website") }}">
                     </div>
 
-                    <div class="col-1"></div>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="application[found_on]" placeholder="Found on" value="{{ old('application.found_on', 'Linkedin') }}">
+                    </div>
 
                     <div class="col-4">
-                        <input type="hidden" name="application[notes]" id="hidden-description">
+                        <input type="hidden" name="application[notes]" id="quillInput">
 
-                        <div id="editor" >
+                        <div id="quillContent">
                             {!! old('application.notes') !!}
                         </div>
                     </div>
@@ -141,3 +143,37 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            function fetchAddress() {
+                let zipcode = $('#zipcode').val().replace(/\s+/g, '').toUpperCase();
+                let housenr = $('#housenr').val().trim();
+
+                if (zipcode.length === 6 && housenr !== '') {
+                    let query = zipcode + '+' + housenr;
+
+                    $.get('/api/address-lookup', { q: query })
+                        .done(function (data) {
+                            if (data.response.docs.length > 0) {
+                                let result = data.response.docs[0];
+
+                                $('#street').val(result.straatnaam || '');
+                                $('#city').val(result.woonplaatsnaam || '');
+                                $('#region').val(result.provincienaam || '');
+                                $('#country').val('Nederland');
+                            } else {
+                                console.warn('Geen resultaat gevonden.');
+                            }
+                        })
+                        .fail(function () {
+                            console.error('Fout bij ophalen van adresgegevens.');
+                        });
+                }
+            }
+
+            $('#zipcode, #housenr').on('blur', fetchAddress);
+        });
+    </script>
+@endpush
