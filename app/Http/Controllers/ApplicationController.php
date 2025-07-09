@@ -68,6 +68,7 @@ class ApplicationController extends Controller
         $data['application']['status'] = 'applied';
         $data['application']['applied_at'] = Carbon::now()->toDateString();
         $data['application']['link'] = $data['application']['website'];
+        $data['application']['properties'] = $data['application']['properties'] ?? [];
 
         $application = Application::create($data['application']);
 
@@ -86,6 +87,7 @@ class ApplicationController extends Controller
     public function update(UpdateApplicationRequest $request, Application $application): RedirectResponse
     {
         $data = $request->validated();
+        $data['application']['properties'] = $data['application']['properties'] ?? [];
 
         $updateData = $data;
 
@@ -97,7 +99,11 @@ class ApplicationController extends Controller
             $updateData['notes'] = $application->notes;
         }
 
-        $application->update($updateData);
+        $application->update([
+            'status'     => $data['status'],
+            'notes'      => $updateData['notes'],
+            'properties' => $data['application']['properties'] ?? [],
+        ]);
 
         return redirect()->route('applications.show', $application)->with('success', 'Application updated!');
     }

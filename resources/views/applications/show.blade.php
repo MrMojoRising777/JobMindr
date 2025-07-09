@@ -10,7 +10,7 @@
                             @include('components.favorite-btn', ['model' => $application])
 
                             <h2 class="card-title ms-4">
-                                {{ $application->position }} @ {{ $application->company->name }}
+                                {{ $application->position }} at {{ $application->company->name }}
                                 <span class="text-end">
                                     <span class="badge {{ $application->status->badgeClass() }} fs-6">
                                         {{ $application->status->label() }}
@@ -23,9 +23,30 @@
                             <hr class="hr mb-0"/>
 
                             <span class="text-danger">
-                                <i class="bi bi-briefcase"></i> Remote - full-time - entry level |
-                                <i class="bi bi-currency-euro"></i> 2.500-3.000 |
-                                <i class="bi bi-link-45deg"></i> <a href="{{ $application->link }}" target="_blank">original link</a>
+                                @if(isset($application->properties['experience_level']) || isset($application->properties['job_type']) || isset($application->properties['work_location']))
+                                    <i class="bi bi-briefcase"></i>
+                                    {{ isset($application->properties['experience_level']) ? ucfirst($application->properties['experience_level']) : '' }}
+                                    {{ isset($application->properties['job_type']) ? ' - ' . ucfirst($application->properties['job_type']) : '' }}
+                                    {{ isset($application->properties['work_location']) ? ' - ' . ucfirst($application->properties['work_location']) : '' }}
+                                    |
+                                @endif
+
+                                @if(isset($application->properties['education_level']))
+                                    <i class="bi bi-mortarboard"></i>
+                                    {{ ucfirst(str_replace('_', ' ', $application->properties['education_level'])) }} |
+                                @endif
+
+                                    @if(isset($application->properties['salary_range']['min']) || isset($application->properties['salary_range']['max']))
+                                        <i class="bi bi-currency-euro"></i>
+                                        {{ isset($application->properties['salary_range']['min']) ? number_format($application->properties['salary_range']['min'], 0, '', '.') : '?' }}
+                                        -
+                                        {{ isset($application->properties['salary_range']['max']) ? number_format($application->properties['salary_range']['max'], 0, '', '.') : '?' }} |
+                                    @endif
+
+                                @if(!empty($application->link))
+                                    <i class="bi bi-link-45deg"></i>
+                                    <a href="{{ $application->link }}" target="_blank">original link</a>
+                                @endif
                             </span>
                         </div>
 
@@ -38,7 +59,7 @@
 
                     <div class="row">
                         <div class="col-6">
-                            <span>empty</span>
+{{--                            <span>empty</span>--}}
                         </div>
 
                         <div class="col-3"></div>
@@ -112,15 +133,15 @@
                         </div>
 
                         <div class="col-4">
-                            @if($application->notes)
-                                <span class="fs-3">Personal notes</span>
+{{--                            @if($application->notes)--}}
+{{--                                <span class="fs-3">Personal notes</span>--}}
 
-                                <input type="hidden" name="application[notes]" id="hidden-description">
+{{--                                <input type="hidden" name="application[notes]" id="hidden-description">--}}
 
-                                <div id="editor">
-                                    {!! $application->notes !!}
-                                </div>
-                            @endif
+{{--                                <div id="editor">--}}
+{{--                                    {!! $application->notes !!}--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
                         </div>
                     </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,12 +17,11 @@ class Application extends Model
     use HasFactory, LogsActivity;
 
     protected $casts = [
-        'status' => ApplicationStatus::class,
-        'reason' => ApplicationRejectionReason::class,
+        'properties'    => 'array',
+        'status'        => ApplicationStatus::class,
+        'reason'        => ApplicationRejectionReason::class,
     ];
-    protected $fillable = [
-        'user_id', 'company_id', 'position', 'description', 'found_on', 'status', 'applied_at', 'notes', 'reason' ,'link'
-    ];
+    protected $fillable = ['user_id', 'company_id', 'position', 'properties', 'found_on', 'status', 'applied_at', 'notes', 'reason' ,'link'];
 
     public const STATUSES = [
         'applied',
@@ -65,5 +65,50 @@ class Application extends Model
                     default   => "Application {$eventName}",
                 };
             });
+    }
+
+    protected function salaryRange(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->properties['salary_range'] ?? null,
+            set: fn (string|null $value) => $this->mergeProperty('salary_range', $value),
+        );
+    }
+
+    protected function jobType(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->properties['job_type'] ?? null,
+            set: fn (string|null $value) => $this->mergeProperty('job_type', $value),
+        );
+    }
+
+    protected function workLocation(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->properties['work_location'] ?? null,
+            set: fn (string|null $value) => $this->mergeProperty('work_location', $value),
+        );
+    }
+
+    protected function experienceLevel(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->properties['experience_level'] ?? null,
+            set: fn (string|null $value) => $this->mergeProperty('experience_level', $value),
+        );
+    }
+
+    protected function educationLevel(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->properties['education_level'] ?? null,
+            set: fn (string|null $value) => $this->mergeProperty('education_level', $value),
+        );
+    }
+
+    private function mergeProperty(string $key, mixed $value): array
+    {
+        return array_merge($this->properties ?? [], [$key => $value]);
     }
 }

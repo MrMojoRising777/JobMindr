@@ -16,7 +16,7 @@ return new class extends Migration
         });
 
         Schema::table('applications', function (Blueprint $table) {
-            $table->longText('properties')->nullable()->change();
+            $table->json('properties')->nullable()->change();
         });
     }
 

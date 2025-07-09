@@ -122,12 +122,73 @@
                         <input type="text" class="form-control" name="application[found_on]" placeholder="Found on" value="{{ old('application.found_on', 'Linkedin') }}">
                     </div>
 
-                    <div class="col-4">
-                        <input type="hidden" name="application[notes]" id="quillInput">
+{{--                    <div class="col-3">--}}
+{{--                        <input type="hidden" name="application[notes]" id="quillInput">--}}
 
-                        <div id="quillContent">
-                            {!! old('application.notes') !!}
+{{--                        <div id="quillContent">--}}
+{{--                            {!! old('application.notes') !!}--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <span class="input-group-text">Min</span>
+                            <input type="number" name="application[properties][salary_range][min]" class="form-control" placeholder="3000"
+                                   min="0" step="100">
                         </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <span class="input-group-text">Max</span>
+                            <input type="number" name="application[properties][salary_range][max]" class="form-control" placeholder="4000"
+                                   min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <select name="application[properties][job_type]" class="form-control">
+                            <option value="">Job Type</option>
+                            <option value="full-time">Full-time</option>
+                            <option value="part-time">Part-time</option>
+                            <option value="contract">Contract</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <select name="application[properties][work_location]" class="form-control">
+                            <option value="">Work Location</option>
+                            <option value="on-site">On-site</option>
+                            <option value="remote">Remote</option>
+                            <option value="hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-2">
+                        <select name="application[properties][experience_level]" class="form-control">
+                            <option value="">Experience Level</option>
+                            <option value="junior">Junior</option>
+                            <option value="medior">Medior (3-5 years)</option>
+                            <option value="senior">Senior (5-7 years)</option>
+                            <option value="lead">Lead (7+ years)</option>
+                            <option value="none">None required</option>
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <select name="application[properties][education_level]" class="form-control">
+                            <option value="">Education Level</option>
+                            <option value="high_school">High School</option>
+                            <option value="bachelor">Bachelor</option>
+                            <option value="master">Master</option>
+                            <option value="phd">PhD</option>
+                            <option value="none">None required</option>
+                        </select>
                     </div>
                 </div>
 
