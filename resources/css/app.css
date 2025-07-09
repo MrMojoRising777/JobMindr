@@ -2,6 +2,15 @@
     cursor: pointer !important;
 }
 
+.fav-btn {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    position: absolute;
+    top: -12px;
+    left: 1px;
+}
+
 /* Quill editor overwrite */
 #quillContent {
     height: 200px !important;

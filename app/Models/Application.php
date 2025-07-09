@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\ApplicationStatus;
 use App\Enums\ApplicationRejectionReason;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -31,6 +32,11 @@ class Application extends Model
         'canceled',
     ];
 
+    public function getFavoritableType(): string
+    {
+        return 'application';
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -39,6 +45,11 @@ class Application extends Model
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    public function favorites(): morphMany
+    {
+        return $this->morphMany(Favorite::class, 'favoritable');
     }
 
     public function getActivitylogOptions(): LogOptions

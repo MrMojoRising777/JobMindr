@@ -3,15 +3,11 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            @include('components.favorite-btn', ['model' => $company])
+
             <form action="{{ route('companies.store', ['company' => $company]) }}" method="POST">
                 @csrf
-                <h2 class="card-title">
-                    {{ $company->name }}
-
-                    <span id="retrieveData">
-                        <i class="bi bi-repeat"></i>
-                    </span>
-                </h2>
+                <h2 class="card-title ms-4">{{ $company->name }}</h2>
 
                 <div class="row">
                     <div class="col-4">

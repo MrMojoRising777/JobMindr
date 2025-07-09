@@ -30,6 +30,12 @@
                         Applications
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('favorites.index') ? 'active' : '' }}" href="{{ route('favorites.index') }}">
+                        Favorites
+                    </a>
+                </li>
             </ul>
 
             <ul class="navbar-nav ms-auto">

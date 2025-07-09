@@ -1,36 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-2">
-            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#applicationModal">
-                <i class="bi bi-pen"></i>
-                Edit Application
-            </a>
-        </div>
-
-        <div class="col-2">
-            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#contactModal">
-                <i class="bi bi-pen"></i>
-                Edit Contact
-            </a>
-        </div>
-
-        <div class="col-2">
-            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#companyModal">
-                <i class="bi bi-pen"></i>
-                Edit Company
-            </a>
-        </div>
-    </div>
-
     <div class="row mt-2">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-9">
-                            <h2 class="card-title">
+                            @include('components.favorite-btn', ['model' => $application])
+
+                            <h2 class="card-title ms-4">
                                 {{ $application->position }} @ {{ $application->company->name }}
                                 <span class="text-end">
                                     <span class="badge {{ $application->status->badgeClass() }} fs-6">
@@ -39,15 +18,15 @@
                                 </span>
                             </h2>
 
-                            <span>{{ $application->applied_at }}</span>
+                            <span class="ms-4">{{ $application->applied_at }}</span>
 
                             <hr class="hr mb-0"/>
 
                             <span class="text-danger">
-                        <i class="bi bi-briefcase"></i> Remote - full-time - entry level |
-                        <i class="bi bi-currency-euro"></i> 2.500-3.000 |
-                        <i class="bi bi-link-45deg"></i> <a href="{{ $application->link }}" target="_blank">original link</a>
-                    </span>
+                                <i class="bi bi-briefcase"></i> Remote - full-time - entry level |
+                                <i class="bi bi-currency-euro"></i> 2.500-3.000 |
+                                <i class="bi bi-link-45deg"></i> <a href="{{ $application->link }}" target="_blank">original link</a>
+                            </span>
                         </div>
 
                         <div class="col-3 text-end pe-5">
@@ -59,7 +38,7 @@
 
                     <div class="row">
                         <div class="col-6">
-                            <span>{{ $application->description }}</span>
+                            <span>empty</span>
                         </div>
 
                         <div class="col-3"></div>
@@ -67,8 +46,7 @@
                         <div class="col-3">
                             <span class="fs-4">{{ $application->company->contact?->full_name }}</span>
                             <br/>
-                            <span
-                                class="fs-6 text-secondary-emphasis">{{ $application->company->contact?->position }}</span>
+                            <span class="fs-6 text-secondary-emphasis">{{ $application->company->contact?->position }}</span>
 
                             <table class="table">
                                 <tr>
@@ -134,13 +112,38 @@
                         </div>
 
                         <div class="col-4">
-                            <span class="fs-3">Personal notes</span>
+                            @if($application->notes)
+                                <span class="fs-3">Personal notes</span>
 
-                            <input type="hidden" name="application[notes]" id="hidden-description">
+                                <input type="hidden" name="application[notes]" id="hidden-description">
 
-                            <div id="editor">
-                                {!! $application->notes !!}
-                            </div>
+                                <div id="editor">
+                                    {!! $application->notes !!}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#applicationModal">
+                                <i class="bi bi-pen"></i>
+                                Edit Application
+                            </a>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#contactModal">
+                                <i class="bi bi-pen"></i>
+                                Edit Contact
+                            </a>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#companyModal">
+                                <i class="bi bi-pen"></i>
+                                Edit Company
+                            </a>
                         </div>
                     </div>
                 </div>

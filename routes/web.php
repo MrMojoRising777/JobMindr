@@ -5,6 +5,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/{application}', 'update')->name('update');
 
         Route::post('/filter', 'filter')->name('filter');
+    });
+
+    Route::prefix('/favorites')->controller(FavoriteController::class)->name('favorites.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
     });
 
     Route::get('/api/address-lookup', [AddressController::class, 'lookup']);
