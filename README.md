@@ -16,6 +16,9 @@
   - Status updates (e.g. Rejected + reason)
 - 📊 Dashboard with Chart.js showing weekly/monthly stats
 
+<img width="1920" height="971" alt="image" src="https://github.com/user-attachments/assets/c69ca381-f64a-4bc7-bcee-d85d5517d895" />
+
+
 ---
 
 ## ⚙️ Tech Stack
