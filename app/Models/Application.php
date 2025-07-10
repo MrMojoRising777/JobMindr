@@ -55,15 +55,29 @@ class Application extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['status', 'reason'])
+            ->logOnly(['status', 'reason', 'properties'])
             ->logOnlyDirty()
             ->useLogName('application')
             ->setDescriptionForEvent(function (string $eventName) {
-                return match ($eventName) {
-                    'created' => 'Applied',
-                    'updated' => 'Status updated',
-                    default   => "Application {$eventName}",
-                };
+                if ($eventName === 'created') {
+                    return 'Applied';
+                }
+
+                if ($eventName === 'updated') {
+                    $dirty = $this->getDirty();
+
+                    if (array_key_exists('status', $dirty)) {
+                        return 'Status updated';
+                    }
+
+                    if (array_key_exists('properties', $dirty)) {
+                        return 'Properties edited';
+                    }
+
+                    return 'Application updated';
+                }
+
+                return "Application {$eventName}";
             });
     }
 
